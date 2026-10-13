@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notes</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 600px; margin: 40px auto; padding: 0 16px; }
+  form { display: flex; gap: 8px; }
+  input { flex: 1; padding: 8px; }
+  li { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #ddd; }
+  small { color: #666; }
+</style>
+</head>
+<body>
+<h1>Notes</h1>
+<form id="f"><input id="t" maxlength="500" placeholder="Write a note..." required><button>Add</button></form>
+<ul id="list"></ul>
+<p><small id="info"></small></p>
+<script>
+const list = document.getElementById('list'), info = document.getElementById('info');
+
+async function load() {
+  const r = await fetch('/api/notes');
+  if (!r.ok) { info.textContent = 'Error: ' + (await r.json()).error; return; }
+  list.replaceChildren(...(await r.json()).map(n => {
+    const li = document.createElement('li'), btn = document.createElement('button');
+    li.textContent = n.text;
+    btn.textContent = 'Delete';
+    btn.onclick = async () => { await fetch('/api/notes/' + n.id, {method: 'DELETE'}); load(); };
+    li.append(btn);
+    return li;
+  }));
+  const s = await (await fetch('/api/stats')).json();
+  info.textContent = `${s.count} notes, avg ${s.avg_length} chars | web pod: ${s.web_pod} | notes-api pod: ${s.notes_api_pod}`;
+}
+
+document.getElementById('f').onsubmit = async e => {
+  e.preventDefault();
+  const t = document.getElementById('t');
+  await fetch('/api/notes', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({text: t.value})});
+  t.value = '';
+  load();
+};
+load();
+</script>
+</body>
+</html>
