@@ -1,4 +1,4 @@
-# Replace YOUR_DOCKERHUB_USER with your Docker Hub username before applying.
+# Replace ishaanpuniani with your Docker Hub username before applying.
 apiVersion: v1
 kind: Secret
 metadata:
@@ -70,7 +70,7 @@ spec:
     spec:
       containers:
         - name: notes-api
-          image: YOUR_DOCKERHUB_USER/notes-api:1.0
+          image: ishaanpuniani/notes-api:1.0
           ports: [{ containerPort: 5000 }]
           env:
             - name: MONGO_USER
@@ -107,7 +107,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: YOUR_DOCKERHUB_USER/notes-web:1.0
+          image: ishaanpuniani/notes-web:1.0
           ports: [{ containerPort: 5000 }]
           env:
             - name: NOTES_API_URL

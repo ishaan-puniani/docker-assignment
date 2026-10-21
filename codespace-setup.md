@@ -35,12 +35,12 @@ Replace `<user>` with your Docker Hub username. The Docker Hub repos must be **p
 minikube start                                   # 1-node Kubernetes cluster
 
 docker login
-docker build -t <user>/notes-api:1.0 notes-api
-docker build -t <user>/notes-web:1.0 web
-docker push <user>/notes-api:1.0
-docker push <user>/notes-web:1.0
+docker build -t ishaanpuniani/notes-api:1.0 notes-api
+docker build -t ishaanpuniani/notes-web:1.0 web
+docker push ishaanpuniani/notes-api:1.0
+docker push ishaanpuniani/notes-web:1.0
 
-sed -i 's/YOUR_DOCKERHUB_USER/<user>/' k8s/app.yaml
+sed -i 's/YOUR_DOCKERHUB_USER/ishaanpuniani/' k8s/app.yaml
 kubectl apply -f k8s/app.yaml
 kubectl get pods -w                              # wait for 5 pods Running 1/1, then Ctrl+C
 ```
