@@ -111,8 +111,18 @@ minikube start                       # start a 1-node Kubernetes cluster
 kubectl port-forward svc/web 8080:80 # Codespaces pops up "Open in Browser" for port 8080
 ```
 
+## Assignment documents
+| Document | PDF | Word |
+|---|---|---|
+| 1. Software description | [PDF](docs/1-software-description.pdf) | [DOCX](docs/1-software-description.docx) |
+| 2. Architecture design | [PDF](docs/2-architecture-design.pdf) | [DOCX](docs/2-architecture-design.docx) |
+| 3. Benefits, challenges and security | [PDF](docs/3-benefits-challenges-security.pdf) | [DOCX](docs/3-benefits-challenges-security.docx) |
+
+Requirement checklist and prepared answers for the Q&A: [requirements-and-qa.md](requirements-and-qa.md).
+
 ## Repository layout
 ```
+docs/        Assignment documents (PDF)
 notes-api/   Node.js + Express REST service over MongoDB (server.js, Dockerfile)
 web/         Node.js + Express UI + gateway, consumes notes-api REST via fetch (server.js, static/index.html, Dockerfile)
 k8s/app.yaml All Kubernetes objects: Secret, PVC, Deployments, Services
