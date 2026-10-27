@@ -99,31 +99,3 @@ curl http://localhost:30080/api/notes               # REST API directly
 curl -X POST -H "Content-Type: application/json" -d '{"text":"hi"}' http://localhost:30080/api/notes
 ```
 Refresh the page a few times to see the pod names in the footer change.
-
-### Running in GitHub Codespaces (no local Docker needed)
-The repo includes `.devcontainer/devcontainer.json`, so a Codespace starts with Docker, kubectl and minikube installed. Full walkthrough: [codespace-setup.md](codespace-setup.md).
-
-### Running on a DigitalOcean Droplet (public URL)
-One Ubuntu VM running k3s; the app is reachable at `http://<droplet-ip>:30080`. Full walkthrough: [digitalocean-setup.md](digitalocean-setup.md).
-```sh
-minikube start                       # start a 1-node Kubernetes cluster
-# then do the build/push/apply steps above
-kubectl port-forward svc/web 8080:80 # Codespaces pops up "Open in Browser" for port 8080
-```
-
-## Assignment documents
-| Document | PDF | Word |
-|---|---|---|
-| 1. Software description | [PDF](docs/1-software-description.pdf) | [DOCX](docs/1-software-description.docx) |
-| 2. Architecture design | [PDF](docs/2-architecture-design.pdf) | [DOCX](docs/2-architecture-design.docx) |
-| 3. Benefits, challenges and security | [PDF](docs/3-benefits-challenges-security.pdf) | [DOCX](docs/3-benefits-challenges-security.docx) |
-
-Requirement checklist and prepared answers for the Q&A: [requirements-and-qa.md](requirements-and-qa.md).
-
-## Repository layout
-```
-docs/        Assignment documents (PDF)
-notes-api/   Node.js + Express REST service over MongoDB (server.js, Dockerfile)
-web/         Node.js + Express UI + gateway, consumes notes-api REST via fetch (server.js, static/index.html, Dockerfile)
-k8s/app.yaml All Kubernetes objects: Secret, PVC, Deployments, Services
-```
